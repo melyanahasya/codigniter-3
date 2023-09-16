@@ -103,7 +103,7 @@
             <button type="button" id="TooltipDemo" class="btn-open-options btn btn-warning">
                 <i class="fa fa-cog fa-w-16 fa-spin fa-2x"></i>
             </button>
-        
+
         </div>
         <div class="app-main">
 
@@ -118,15 +118,18 @@
                             <th scope="col" class="text-center">Nama Siswa</th>
                             <th scope="col" class="text-center">Nisn</th>
                             <th scope="col" class="text-center">Gender</th>
+                            <th scope="col" class="text-center">Kelas</th>
                             <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($result as $row): ?>
+                        <?php $no = 0;
+                        foreach ($result as $row):
+                            $no++ ?>
                             <tr>
 
                                 <th data-cell="No" class="text-center" scope="row">
-                                    <?php echo $row->id_siswa; ?>
+                                    <?php echo $no ?>
                                 </th>
                                 <td data-cell="Nama Siswa" class="text-center">
                                     <?php echo $row->nama_siswa; ?>
@@ -137,10 +140,13 @@
                                 <td data-cell="Gender" class="text-center">
                                     <?php echo $row->gender; ?>
                                 </td>
+                                <td data-cell="Kelas" class="text-center">
+                                    <?php echo $row->tingkat_kelas . ' ' . $row->jurusan_kelas; ?>
+                                </td>
                                 <td data-cell="Aksi" class="text-center aksi">
-                                    <button type="button" id="PopoverCustomT-1"
-                                        class="btn btn-success btn-sm edit">Edit</button>
-                                    <button type="button" id="PopoverCustomT-1"
+                                    <a href="<?php echo base_url('admin/update_siswa/').$row->id_siswa?>" type="button" id="PopoverCustomT-1"
+                                        class="btn btn-success btn-sm edit">Edit</a>
+                                    <button onclick="hapus(<?php echo $row->id_siswa ?>)" type="button" id="PopoverCustomT-1"
                                         class="btn btn-danger btn-sm hapus">Hapus</button>
                                 </td>
 
@@ -148,10 +154,17 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-               
+
             </div>
 
-
+            <script>
+                function hapus(id) {
+                    var yes = confirm('Yakin di hapus?');
+                    if (yes == true) {
+                        window.location.href = "<?php echo base_url('admin/hapus_siswa/') ?>" + id;
+                    }
+                }
+            </script>
 </body>
 
 </html>

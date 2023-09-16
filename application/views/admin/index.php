@@ -477,7 +477,9 @@
                                         <div class="widget-subheading">Its Student</div>
                                     </div>
                                     <div class="widget-content-right">
-                                        <div class="widget-numbers text-white"><span> 66 </span></div>
+                                        <div class="widget-numbers text-white"><span>
+                                                <?php echo $siswa ?>
+                                            </span></div>
                                     </div>
 
                                 </div>
@@ -487,11 +489,11 @@
                             <div class="card mb-3 widget-content bg-arielle-smile">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Clients</div>
-                                        <div class="widget-subheading">Total Clients Profit</div>
+                                        <div class="widget-heading">Mapel</div>
+                                        <div class="widget-subheading">Total Mapel </div>
                                     </div>
                                     <div class="widget-content-right">
-                                        <div class="widget-numbers text-white"><span>$ 568</span></div>
+                                        <div class="widget-numbers text-white"><span>33</span></div>
                                     </div>
                                 </div>
                             </div>

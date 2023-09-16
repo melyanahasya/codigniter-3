@@ -8,3 +8,5 @@ function tampil_full_kelas_byid($id){
         return $stmt;
     }
 }
+
+?>
