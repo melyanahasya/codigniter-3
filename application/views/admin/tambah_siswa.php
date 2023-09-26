@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Codeigniter-3</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
@@ -140,6 +140,11 @@
                         </option>
                         <?php endforeach?>
                         </select>
+                    </div>
+
+                    <div class="mb-3 col-6">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto">
                     </div>
                     
                     <button name="submit" type="submit" style="width:60px" class="btn btn-sm btn-success" name="submit">Submit</button>

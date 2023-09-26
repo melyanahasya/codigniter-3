@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Codeigniter-3</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
@@ -115,6 +115,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Foto Siswa</th>
                             <th scope="col" class="text-center">Nama Siswa</th>
                             <th scope="col" class="text-center">Nisn</th>
                             <th scope="col" class="text-center">Gender</th>
@@ -131,7 +132,11 @@
                                 <th data-cell="No" class="text-center" scope="row">
                                     <?php echo $no ?>
                                 </th>
+                               
                                 <td data-cell="Nama Siswa" class="text-center">
+                                    <img src="<?php echo base_url('images/siswa/'.$row->foto)?>" width="50" alt="">
+                                </td> 
+                                <td data-cell="Foto Siswa" class="text-center">
                                     <?php echo $row->nama_siswa; ?>
                                 </td>
                                 <td data-cell="Nisn" class="text-center">
