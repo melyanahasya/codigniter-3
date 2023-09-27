@@ -31,7 +31,8 @@
                 <div class="card w-50 m-auto p-3 ">
                     <h2 class="text-center">Akun</h2>
 
-                    <form enctype="multipart/form-data" action="<?php echo base_url('admin/aksi_ubah_akun') ?>"  style="margin:25px" method="post" class="row">
+                    <form enctype="multipart/form-data" action="<?php echo base_url('admin/aksi_ubah_akun') ?>"
+                        style="margin:25px" method="post" class="row">
 
                         <div class="mb-3 col-6">
                             <label for="email" class="form-label bold">Email</label>
@@ -42,6 +43,10 @@
                             <label for="username" class="form-label">Username</label>
                             <input value="<?php echo $rows->username ?>" type="text" class="form-control" id="username"
                                 name="username">
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="foto" class="form-label">Foto</label>
+                            <input type="file" class="form-control" id="foto" name="foto">
                         </div>
                         <div class="mb-3 col-6">
                             <label for="baru" class="form-label">Password Baru</label>

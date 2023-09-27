@@ -30,6 +30,14 @@ class Admin extends CI_Controller
 		$this->load->view('admin/index', $data);
 	}
 
+	public function dashboard_keuangan()
+	{
+		// get data siswa
+		$data['siswa'] = $this->m_model->get_data('siswa')->num_rows();
+		// untuk menampilkan admin/index
+		$this->load->view('admin/dashboard_keuangan', $data);
+	}
+
 	public function upload_img($value)
 	{
 		$kode = round(microtime(true) * 1000);
@@ -47,10 +55,17 @@ class Admin extends CI_Controller
 		}
 	}
 
+
 	public function siswa()
 	{
 		$data['result'] = $this->m_model->getData();
 		$this->load->view('admin/siswa', $data);
+	}
+
+	public function table_akun()
+	{
+		$data['user'] = $this->m_model->get_data('admin')->result();
+		$this->load->view('admin/table_akun', $data);
 	}
 
 
@@ -133,19 +148,46 @@ class Admin extends CI_Controller
 		$this->load->view('admin/akun', $data);
 	}
 
+
+	public function upload_img_admin($value)
+	{
+		$kode = round(microtime(true) * 1000);
+		$config['upload_path'] = './images/admin';
+		$config['allowed_types'] = 'jpg|png|jpeg';
+		$config['max_size'] = '30000';
+		$config['file_name'] = $kode;
+		$this->upload->initialize($config);
+		if (!$this->upload->do_upload($value)) {
+			return array(false, '');
+		} else {
+			$fn = $this->upload->data();
+			$nama = $fn['file_name'];
+			return array(true, $nama);
+		}
+	}
+
 	public function aksi_ubah_akun()
 	{
+		$foto = $this->upload_img_admin('foto');
 		$password_baru = $this->input->post('password_baru');
 		$konfirmasi_password = $this->input->post('konfirmasi_password');
 		$email = $this->input->post('email');
 		$username = $this->input->post('username');
 
-		// yang di sblh kiri disamain dg database
-		// buat data yang diubah
-		$data = array(
-			'email' => $email,
-			'username' => $username
-		);
+		$foto = $this->upload_img_admin('foto');
+		if ($foto[0] == false) {
+			$data = [
+				'foto' => 'userr.png',
+				'email' => $email,
+				'username' => $username,
+			];
+		} else {
+			$data = [
+				'foto' => $foto[1],
+				'email' => $email,
+				'username' => $username,
+			];
+		}
 
 		// jika ada password baru
 		if (!empty($password_baru)) {
@@ -158,6 +200,8 @@ class Admin extends CI_Controller
 				redirect(base_url('admin/akun'));
 			}
 		}
+
+
 
 		// lakukan pembaruan data
 		$this->session->set_userdata($data);

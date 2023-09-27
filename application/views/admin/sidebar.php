@@ -58,7 +58,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="/codeigniter-3/admin">
+                                <a href="/codeigniter-3/admin/dashboard_keuangan">
                                     <i class="metismenu-icon"></i>
                                     Home
                                 </a>
