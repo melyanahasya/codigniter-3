@@ -16,7 +16,7 @@ class Admin extends CI_Controller
 		;
 		// fungsi validasi dibawah untuk ngecek ketika masuk ke halaman admin , data sdh true atau blm
 		// kalo blm true maka akan kembali ke page auth
-		if ($this->session->userdata('logged_in') != true) {
+		if ($this->session->userdata('logged_in') != true && $this->session->userdata('role') != 'admin') {
 			redirect(base_url() . 'auth');
 		}
 	}
@@ -106,10 +106,43 @@ class Admin extends CI_Controller
 
 	}
 
+	// public function hapus_siswa($id)
+	// {
+	// 	$this->m_model->delete('siswa', 'id_siswa', $id);
+	// 	redirect(base_url('admin/siswa'));
+	// }
+
 	public function hapus_siswa($id)
 	{
-		$this->m_model->delete('siswa', 'id_siswa', $id);
-		redirect(base_url('admin/siswa'));
+
+		// model del siswa by id
+		$siswa = $this->m_model->get_by_id('siswa', 'id_siswa', $id)->row();
+		if ($siswa) {
+			if ($siswa->foto !== 'user.png') {
+				$file_path = './images/siswa/' . $siswa->foto;
+
+				if (file_exists($file_path)) {
+					if (unlink($file_path)) {
+						// Hapus file berhasil menggunakan code delete
+						$this->m_model->delete('siswa', 'id_siswa', $id);
+						redirect(base_url('admin/siswa'));
+					} else {
+						// gagal menghapus file
+						echo "gagal menghapus file";
+					}
+				} else {
+					// file tidak ditemukan
+					echo "file tidak ditemukan";
+				}
+			} else {
+				// Tanpa hapus file 'user.png'
+				$this->m_model->delete('siswa' . 'id_siswa', $id);
+				redirect(base_url(admin / siswa));
+			}
+		} else {
+			// siswa tidak ditemukan
+			echo "siswa tidak ditemukan";
+		}
 	}
 
 
@@ -122,23 +155,72 @@ class Admin extends CI_Controller
 		$this->load->view('admin/update_siswa', $data);
 	}
 
+	// public function aksi_ubah_siswa()
+	// {
+	// 	$data = array(
+	// 		'nama_siswa' => $this->input->post('nama'),
+	// 		'nisn' => $this->input->post('nisn'),
+	// 		'gender' => $this->input->post('gender'),
+	// 		'id_kelas' => $this->input->post('kelas'),
+	// 	);
+
+	// 	$eksekusi = $this->m_model->ubah_data
+	// 	('siswa', $data, array('id_siswa' => $this->input->post('id_siswa')));
+	// 	if ($eksekusi) {
+	// 		$this->session->set_flashdata('sukses', 'berhasil');
+	// 		redirect(base_url('admin/siswa'));
+	// 	} else {
+	// 		$this->session->set_flashdata('error', 'gagal..');
+	// 		redirect(base_url('admin/siswa/update_siswa/' . $this->input->post('id_siswa')));
+	// 	}
+	// }
+
 	public function aksi_ubah_siswa()
 	{
-		$data = array(
-			'nama_siswa' => $this->input->post('nama'),
-			'nisn' => $this->input->post('nisn'),
-			'gender' => $this->input->post('gender'),
-			'id_kelas' => $this->input->post('kelas'),
-		);
+		$foto = $_FILES['foto']['name'];
+		$foto_temp = $_FILES['foto']['tmp_name'];
 
-		$eksekusi = $this->m_model->ubah_data
-		('siswa', $data, array('id_siswa' => $this->input->post('id_siswa')));
+		// Jika ada foto yang diunggah
+		if ($foto) {
+			$kode = round(microtime(true) * 1000);
+			$file_name = $kode . '_' . $foto;
+			$upload_path = './images/siswa/' . $file_name;
+
+			if (move_uploaded_file($foto_temp, $upload_path)) {
+				// Hapus foto lama jika ada
+				$old_file = $this->m_model->get_siswa_foto_by_id($this->input->post('id_siswa'));
+				if ($old_file && file_exists('./images/siswa/' . $old_file)) {
+					unlink('./images/siswa/' . $old_file);
+				}
+
+				$data = [
+					'foto' => $file_name,
+					'nama_siswa' => $this->input->post('nama'),
+					'nisn' => $this->input->post('nisn'),
+					'gender' => $this->input->post('gender'),
+					'id_kelas' => $this->input->post('kelas'),
+				];
+			} else {
+				// Gagal mengunggah foto baru
+				redirect(base_url('admin/ubah_siswa/' . $this->input->post('id_siswa')));
+			}
+		} else {
+			// Jika tidak ada foto yang diunggah
+			$data = [
+				'nama_siswa' => $this->input->post('nama'),
+				'nisn' => $this->input->post('nisn'),
+				'gender' => $this->input->post('gender'),
+				'id_kelas' => $this->input->post('kelas'),
+			];
+		}
+
+		// Eksekusi dengan model ubah_data
+		$eksekusi = $this->m_model->ubah_data('siswa', $data, array('id_siswa' => $this->input->post('id_siswa')));
+
 		if ($eksekusi) {
-			$this->session->set_flashdata('sukses', 'berhasil');
 			redirect(base_url('admin/siswa'));
 		} else {
-			$this->session->set_flashdata('error', 'gagal..');
-			redirect(base_url('admin/siswa/update_siswa/' . $this->input->post('id_siswa')));
+			redirect(base_url('admin/ubah_siswa/' . $this->input->post('id_siswa')));
 		}
 	}
 

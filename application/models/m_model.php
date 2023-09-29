@@ -18,6 +18,16 @@ class M_model extends CI_Model
         return $query->result();
     }
 
+    public function getDataPembayaran()
+    {
+        $this->db->select('pembayaran.*,siswa.nama_siswa');
+        $this->db->from('pembayaran');
+        $this->db->join('siswa', 'pembayaran.id_siswa = siswa.id_siswa', 'left');
+        // Query database untuk mengambil data
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     function getwhere($table, $data)
     {
         return $this->db->get_where($table, $data);
@@ -73,6 +83,20 @@ class M_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function tambah_pembayaran($table, $data)
+    {
+        $this->db->insert($table, $data);
+        return $this->db->insert_id();
+    }
+    
+    function delete_pembayaran($table, $field, $id)
+    {
+        $data = $this->db->delete($table, array($field => $id));
+        return $data;
+    }
+    
+
      
 }
 

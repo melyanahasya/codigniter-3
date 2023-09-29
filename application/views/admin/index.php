@@ -235,7 +235,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     <h5 class="pb-2">Choose Color Scheme
-                                    </h5>
+                            z        </h5>
                                     <div class="theme-settings-swatches">
                                         <div class="swatch-holder bg-primary switch-sidebar-cs-class"
                                             data-class="bg-primary sidebar-text-light">
@@ -396,7 +396,7 @@
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
                                         <div class="widget-heading">Siswa</div>
-                                        <div class="widget-subheading">Its Student</div>
+                                        <div class="widget-subheading">Data siswa</div>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white"><span>

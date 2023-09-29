@@ -39,10 +39,9 @@ class Auth extends CI_Controller {
 		// validasi dbwh mengecek apakah role itu "admin"
 		if ($this->session->userdata('role') == 'admin') {
 			redirect(base_url()."admin");
-		} if ($this->session->userdata('role') == 'keuangan') {
-			redirect(base_url()."admin/dashboard_keuangan");
-		} 
-		else {
+		} elseif ($this->session->userdata('role') == 'keuangan') {
+			redirect(base_url()."keuangan/");
+		} else {
 			redirect(base_url()."auth");
 		}
 	} else {
