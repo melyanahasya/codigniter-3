@@ -20,9 +20,10 @@ class M_model extends CI_Model
 
     public function getDataPembayaran()
     {
-        $this->db->select('pembayaran.*,siswa.nama_siswa');
+        $this->db->select('pembayaran.*,siswa.nama_siswa, kelas.tingkat_kelas, kelas.jurusan_kelas');
         $this->db->from('pembayaran');
         $this->db->join('siswa', 'pembayaran.id_siswa = siswa.id_siswa', 'left');
+        $this->db->join('kelas', 'pembayaran.id_kelas = kelas.id', 'left');
         // Query database untuk mengambil data
         $query = $this->db->get();
         return $query->result();
@@ -96,8 +97,7 @@ class M_model extends CI_Model
         return $data;
     }
     
-
-     
+  
 }
 
 ?>

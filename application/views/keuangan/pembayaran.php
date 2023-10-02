@@ -32,7 +32,7 @@
 
         .table {
             margin-top: 2rem;
-            
+
         }
 
         @media (max-width: 600px) {
@@ -109,8 +109,14 @@
 
 
             <div class="app-main__outer">
-                <a href="" type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm "
-                    style="width:5rem ; margin-top: 15px; margin-left:30px;">Tambah</a>
+                <div style="display:flex;">
+                    <a href="<?php echo base_url('keuangan/tambah_pembayaran/') ?>" type="button" id="PopoverCustomT-1"
+                        class="btn btn-primary btn-sm "
+                        style="width:5rem ; margin-top: 15px; margin-left:30px;">Tambah</a>
+                    <a href="<?php echo base_url('keuangan/export/') ?>" type="button" id="PopoverCustomT-1"
+                        class="btn btn-primary btn-sm "
+                        style="width:5rem ; margin-top: 15px; margin-left:7px;">Export</a>
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -138,13 +144,13 @@
                                     <?php echo $row->jenis_pembayaran; ?>
                                 </td>
                                 <td data-cell="Foto Siswa" class="text-center">
-                                    <?php echo $row->total_pembayaran; ?>
+                                    <?php echo convRupiah($row->total_pembayaran) ?>
                                 </td>
 
 
                                 <td data-cell="Aksi" class="text-center aksi">
-                                    <a href="<?php echo base_url('keuangan/update_pembayaran/').$row->id?>" type="button" id="PopoverCustomT-1"
-                                        class="btn btn-success btn-sm edit">Edit</a>
+                                    <a href="<?php echo base_url('keuangan/update_pembayaran/') . $row->id ?>" type="button"
+                                        id="PopoverCustomT-1" class="btn btn-success btn-sm edit">Edit</a>
                                     <button onclick="hapus(<?php echo $row->id ?>)" type="button" id="PopoverCustomT-1"
                                         class="btn btn-danger btn-sm hapus">Hapus</button>
                                 </td>
@@ -155,7 +161,7 @@
                 </table>
 
             </div>
-            
+
             <script>
                 function hapus(id) {
                     var yes = confirm('Yakin di hapus?');

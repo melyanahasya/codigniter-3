@@ -312,4 +312,7 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
+// tambahkan verdon/autoload.php dibawah
+require_once FCPATH.'vendor/autoload.php';
 require_once BASEPATH.'core/CodeIgniter.php';
+
