@@ -20,6 +20,17 @@ function tampil_full_kelas_byid($id){
             return $stmt;
         }
     }
+
+    // untuk mengambil id_kelas dari tabel siswa
+    // function get_siswa_byid($id) {
+    //     $ci =& get_instance();
+    //     $ci->load->database();
+    //     $result =$ci->db->where('id_siswa', $id)->get('siswa');
+    //     foreach ($result->result() as $row) {
+    //         $stmt = $row->id_kelas;
+    //         return $stmt;
+    //     }
+    // }
 }
 
 ?>

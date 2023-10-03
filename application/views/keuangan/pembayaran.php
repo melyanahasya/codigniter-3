@@ -7,7 +7,6 @@
     <title>Codeigniter-3</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
     <link href="https://demo.dashboardpack.com/architectui-html-free/main.css" rel="stylesheet">
 
     <style>
@@ -33,6 +32,11 @@
         .table {
             margin-top: 2rem;
 
+        }
+
+        .pembungkus-pembayaran {
+            margin: 50px;
+            margin-left: 20rem;
         }
 
         @media (max-width: 600px) {
@@ -103,12 +107,13 @@
             </button>
 
         </div>
-        <div class="app-main">
+        <div class="">
 
             <?php include('sidebar.php'); ?>
 
 
-            <div class="app-main__outer">
+            <div class="app-main__outer pembungkus-pembayaran">
+
                 <div style="display:flex;">
                     <a href="<?php echo base_url('keuangan/tambah_pembayaran/') ?>" type="button" id="PopoverCustomT-1"
                         class="btn btn-primary btn-sm "
@@ -116,6 +121,10 @@
                     <a href="<?php echo base_url('keuangan/export/') ?>" type="button" id="PopoverCustomT-1"
                         class="btn btn-primary btn-sm "
                         style="width:5rem ; margin-top: 15px; margin-left:7px;">Export</a>
+                    <button id="exampleModal" type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        style="width:5rem ; margin-top: 15px; margin-left:7px;">Modal</button>
+
                 </div>
                 <table class="table table-striped">
                     <thead>
@@ -128,6 +137,7 @@
                             <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <?php $no = 0;
                         foreach ($result as $row):
@@ -160,6 +170,35 @@
                     </tbody>
                 </table>
 
+                <form action="<?= base_url('keuangan/import') ?>" method="post" enctype="multipart/form-data">
+                    <input type="file" class="form-control" id="file" name="file">
+                    <input type="submit" name="import" value="Import" class="form-control" id="file" name="file">
+                </form>
+
+                <!-- Modal -->
+                <div style="position: absolute; " class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal Import</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 col-6">
+                                    <label for="file" class="form-label">Foto</label>
+                                    <input type="file" class="form-control" id="file" name="file">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <script>
@@ -170,6 +209,10 @@
                     }
                 }
             </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                crossorigin="anonymous"></script>
 </body>
 
 </html>

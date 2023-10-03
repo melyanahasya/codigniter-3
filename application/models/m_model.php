@@ -90,14 +90,28 @@ class M_model extends CI_Model
         $this->db->insert($table, $data);
         return $this->db->insert_id();
     }
-    
+
     function delete_pembayaran($table, $field, $id)
     {
         $data = $this->db->delete($table, array($field => $id));
         return $data;
     }
-    
-  
+
+    //   Import
+    public function get_by_nisn($nisn)
+    {
+        $this->db->select('id_siswa');
+        $this->db->from('siswa');
+        $this->db->where('nisn', $nisn);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->id_siswa;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

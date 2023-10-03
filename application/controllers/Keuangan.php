@@ -8,6 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Keuangan extends CI_Controller
 {
 
+
     // setiap membuat controller harus buat function construct
     function __construct()
     {
@@ -172,6 +173,42 @@ class Keuangan extends CI_Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
 
+    }
+
+    // Function untuk import file ke excell
+    public function import()
+    {
+        if (isset($_FILES["file"]["name"])) {
+            $path = $_FILES["file"]["tmp_name"];
+            $object = PhpOffice\PhpSpreadsheet\IOFactory::load($path);
+            foreach ($object->getWorksheetIterator() as $worksheet) {
+                //    untuk mencari tahu seberapa banyak data yg ada
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+
+                //  $row = 2; artine data dimulai dari baris ke2
+                for ($row = 2; $row <= $highestRow; $row++) {
+                    $jenis_pembayaran = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                    $total_pembayaran = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $nisn = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+
+                    $get_id_by_nisn = $this->m_model->get_by_nisn($nisn);
+                    echo $get_id_by_nisn;
+
+                    
+                    $data = array(
+                        'jenis_pembayaran' => $jenis_pembayaran,
+                        'total_pembayaran' => $total_pembayaran,
+                        'id_siswa' => $get_id_by_nisn
+                    );
+                    // untuk menambahkan ke database
+                    $this->m_model->tambah_data('pembayaran', $data);
+                }
+            }
+            redirect(base_url('keuangan/pembayaran'));
+        } else {
+            echo 'Invalid file';
+        }
     }
 
 }
