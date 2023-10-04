@@ -97,7 +97,7 @@ class M_model extends CI_Model
         return $data;
     }
 
-    //   Import
+    //   Import pembayaran
     public function get_by_nisn($nisn)
     {
         $this->db->select('id_siswa');
@@ -112,6 +112,23 @@ class M_model extends CI_Model
             return false;
         }
     }
+
+    //   Import siswa
+    public function get_by_kelas($tingkat_kelas)
+    {
+        $this->db->select('id');
+        $this->db->from('kelas');
+        $this->db->where('tingkat_kelas', $tingkat_kelas);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->id;
+        } else {
+            return false;
+        }
+    }
+   
 }
 
 ?>

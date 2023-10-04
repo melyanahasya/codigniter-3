@@ -81,7 +81,7 @@ class Keuangan extends CI_Controller
         redirect(base_url('keuangan/pembayaran'));
     }
 
-
+    // function untuk export
     public function export()
     {
         $spreadsheet = new Spreadsheet();
@@ -195,7 +195,7 @@ class Keuangan extends CI_Controller
                     $get_id_by_nisn = $this->m_model->get_by_nisn($nisn);
                     echo $get_id_by_nisn;
 
-                    
+
                     $data = array(
                         'jenis_pembayaran' => $jenis_pembayaran,
                         'total_pembayaran' => $total_pembayaran,

@@ -37,6 +37,11 @@
             margin-left: 2rem;
         }
 
+        .pembungkus-siswa {
+            margin: 10px 50px;
+            margin-left: 5px;
+        }
+
         @media (max-width: 600px) {
 
             .edit {
@@ -110,7 +115,20 @@
             <?php include('sidebar.php'); ?>
 
 
-            <div class="app-main__outer">
+            <div class="app-main__outer pembungkus-siswa">
+
+                <div style="display:flex;">
+                    <a href="<?php echo base_url('admin/tambah_siswa/') ?>" type="button" id="PopoverCustomT-1"
+                        class="btn btn-primary btn-sm "
+                        style="width:5rem ; margin-top: 15px; margin-left:30px;">Tambah</a>
+                    <a href="<?php echo base_url('admin/export_siswa/') ?>" type="button" id="PopoverCustomT-1"
+                        class="btn btn-primary btn-sm "
+                        style="width:5rem ; margin-top: 15px; margin-left:7px;">Export</a>
+                    <button id="exampleModal" type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        style="width:5rem ; margin-top: 15px; margin-left:7px;">Modal</button>
+
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -132,10 +150,10 @@
                                 <th data-cell="No" class="text-center" scope="row">
                                     <?php echo $no ?>
                                 </th>
-                               
+
                                 <td data-cell="Nama Siswa" class="text-center">
-                                    <img src="<?php echo base_url('images/siswa/'.$row->foto)?>" width="50" alt="">
-                                </td> 
+                                    <img src="<?php echo base_url('images/siswa/' . $row->foto) ?>" width="50" alt="">
+                                </td>
                                 <td data-cell="Foto Siswa" class="text-center">
                                     <?php echo $row->nama_siswa; ?>
                                 </td>
@@ -149,16 +167,21 @@
                                     <?php echo $row->tingkat_kelas . ' ' . $row->jurusan_kelas; ?>
                                 </td>
                                 <td data-cell="Aksi" class="text-center aksi">
-                                    <a href="<?php echo base_url('admin/update_siswa/').$row->id_siswa?>" type="button" id="PopoverCustomT-1"
-                                        class="btn btn-success btn-sm edit">Edit</a>
-                                    <button onclick="hapus(<?php echo $row->id_siswa ?>)" type="button" id="PopoverCustomT-1"
-                                        class="btn btn-danger btn-sm hapus">Hapus</button>
+                                    <a href="<?php echo base_url('admin/update_siswa/') . $row->id_siswa ?>" type="button"
+                                        id="PopoverCustomT-1" class="btn btn-success btn-sm edit">Edit</a>
+                                    <button onclick="hapus(<?php echo $row->id_siswa ?>)" type="button"
+                                        id="PopoverCustomT-1" class="btn btn-danger btn-sm hapus">Hapus</button>
                                 </td>
 
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
+                <form action="<?= base_url('admin/import') ?>" method="post" enctype="multipart/form-data">
+                    <input type="file" class="form-control" id="file" name="file">
+                    <input type="submit" name="import" value="Import" class="form-control" id="file" name="file">
+                </form>
 
             </div>
 
