@@ -18,12 +18,23 @@ class M_model extends CI_Model
         return $query->result();
     }
 
+    public function getDataGuru()
+    {
+        $this->db->select('guru.*,mapel.nama_mapel,kelas.tingkat_kelas, kelas.jurusan_kelas');
+        $this->db->from('guru');
+        $this->db->join('mapel', 'guru.id = mapel.id', 'left');
+        $this->db->join('kelas', 'guru.id = kelas.id', 'left');
+        // Query database untuk mengambil data
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function getDataPembayaran()
     {
         $this->db->select('pembayaran.*,siswa.nama_siswa, kelas.tingkat_kelas, kelas.jurusan_kelas');
         $this->db->from('pembayaran');
         $this->db->join('siswa', 'pembayaran.id_siswa = siswa.id_siswa', 'left');
-        $this->db->join('kelas', 'pembayaran.id_kelas = kelas.id', 'left');
+        $this->db->join('kelas', 'pembayaran.id_kelas = kelas.id_guru_walikelas', 'left');
         // Query database untuk mengambil data
         $query = $this->db->get();
         return $query->result();
@@ -105,7 +116,8 @@ class M_model extends CI_Model
         $this->db->where('nisn', $nisn);
         $query = $this->db->get();
 
-        if ($query->num_rows() > 0) {
+        if (
+            $query->num_rows() > 0  ) {
             $result = $query->row();
             return $result->id_siswa;
         } else {
@@ -128,7 +140,7 @@ class M_model extends CI_Model
             return false;
         }
     }
-   
+
 }
 
 ?>

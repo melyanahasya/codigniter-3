@@ -16,7 +16,7 @@ class Keuangan extends CI_Controller
         $this->load->model('m_model');
         $this->load->helper('my_helper');
         // kalo blm true maka akan kembali ke page auth
-        if ($this->session->userdata('logged_in') != true && $this->session->userdata('role') != 'keuangan') {
+        if ($this->session->userdata('logged_in') != true || $this->session->userdata('role') != 'keuangan') {
             redirect(base_url() . 'auth');
         }
     }
@@ -81,7 +81,7 @@ class Keuangan extends CI_Controller
         redirect(base_url('keuangan/pembayaran'));
     }
 
-    // function untuk export
+    // function untuk export excell
     public function export()
     {
         $spreadsheet = new Spreadsheet();
@@ -211,4 +211,22 @@ class Keuangan extends CI_Controller
         }
     }
 
+
+    public function export_pembayaran()
+    {
+        // untuk mengambil seluruh data di tabel pembayaran
+        $data['data_pembayaran'] = $this->m_model->get_data('pembayaran')->result();
+        $data['nama'] = 'pembayaran';
+
+        // berfungsi untuk mengecek / mengambil url ke 3
+        //  arti kondisi :  jika uri segment ketiga nya pdf maka akan menjalankan codingan di bawahnya
+        if ($this->uri->segment(3) == "pdf") {
+            $this->load->library('pdf');
+            $this->pdf->load_view('keuangan/export_data_pembayaran', $data);
+            $this->pdf->render();
+            $this->pdf->stream("data_pembayaran.pdf", array("Attachment" => false));
+        } else {
+            $this->load->view('keuangan/download_data_pembayaran', $data);
+        }
+    }
 }

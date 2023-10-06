@@ -20,7 +20,7 @@ class Admin extends CI_Controller
 		;
 		// fungsi validasi dibawah untuk ngecek ketika masuk ke halaman admin , data sdh true atau blm
 		// kalo blm true maka akan kembali ke page auth
-		if ($this->session->userdata('logged_in') != true && $this->session->userdata('role') != 'admin') {
+		if ($this->session->userdata('logged_in') != true || $this->session->userdata('role') != 'admin') {
 			redirect(base_url() . 'auth');
 		}
 	}
@@ -65,6 +65,7 @@ class Admin extends CI_Controller
 		$data['result'] = $this->m_model->getData();
 		$this->load->view('admin/siswa', $data);
 	}
+	
 
 	public function table_akun()
 	{
@@ -439,5 +440,25 @@ class Admin extends CI_Controller
 			echo 'Invalid file';
 		}
 	}
+
+
+
+	public function export_guru()
+    {
+        // untuk mengambil seluruh data di tabel guru
+        $data['data_guru'] = $this->m_model->getDataGuru();
+        $data['nama'] = 'guru';
+
+        // berfungsi untuk mengecek / mengambil url ke 3
+        //  arti kondisi :  jika uri segment ketiga nya pdf maka akan menjalankan codingan di bawahnya
+        if ($this->uri->segment(3) == "pdf") {
+            $this->load->library('pdf');
+            $this->pdf->load_view('admin/export_data_guru', $data);
+            $this->pdf->render();
+            $this->pdf->stream("data_guru.pdf", array("Attachment" => false));
+        } else {
+            $this->load->view('admin/download_data_guru', $data);
+        }
+    }
 }
 ?>
