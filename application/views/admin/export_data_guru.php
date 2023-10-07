@@ -52,11 +52,17 @@
                     <?php echo $key->gender ?>
                 </td>
                 <td>
-                    <?php echo $key->nama_mapel ?>
+                    <?php echo tampil_full_mapel_byid($key->id_mapel) ?>
                 </td>
                 <td>
-                    <?php echo $key->tingkat_kelas . ' ' . $key->jurusan_kelas; ?>
+                    <?php if (empty(get_id_wali_kelas($key->id))): ?>
+                        Tidak Menjadi Wali Kelas
+                    <?php else: ?>
+                        <?php echo get_id_wali_kelas($key->id) ?>
+                    <?php endif ?>
                 </td>
+
+
             </tr>
         <?php } ?>
     </table>

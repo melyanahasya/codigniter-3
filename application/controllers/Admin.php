@@ -65,7 +65,7 @@ class Admin extends CI_Controller
 		$data['result'] = $this->m_model->getData();
 		$this->load->view('admin/siswa', $data);
 	}
-	
+
 
 	public function table_akun()
 	{
@@ -421,7 +421,7 @@ class Admin extends CI_Controller
 					$tingkat_kelas = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
 					$get_id_by_kelas = $this->m_model->get_by_kelas($tingkat_kelas);
-                    echo $get_id_by_kelas;
+					echo $get_id_by_kelas;
 
 					$data = array(
 						'foto' => $foto,
@@ -429,7 +429,7 @@ class Admin extends CI_Controller
 						'nisn' => $nisn,
 						'gender' => $gender,
 						'id_kelas' => $get_id_by_kelas
-						
+
 					);
 					// untuk menambahkan ke database
 					$this->m_model->tambah_data('siswa', $data);
@@ -444,21 +444,21 @@ class Admin extends CI_Controller
 
 
 	public function export_guru()
-    {
-        // untuk mengambil seluruh data di tabel guru
-        $data['data_guru'] = $this->m_model->getDataGuru();
-        $data['nama'] = 'guru';
+	{
+		// untuk mengambil seluruh data di tabel guru
+		$data['data_guru'] = $this->m_model->get_data('guru')->result();
+		$data['nama'] = 'guru';
 
-        // berfungsi untuk mengecek / mengambil url ke 3
-        //  arti kondisi :  jika uri segment ketiga nya pdf maka akan menjalankan codingan di bawahnya
-        if ($this->uri->segment(3) == "pdf") {
-            $this->load->library('pdf');
-            $this->pdf->load_view('admin/export_data_guru', $data);
-            $this->pdf->render();
-            $this->pdf->stream("data_guru.pdf", array("Attachment" => false));
-        } else {
-            $this->load->view('admin/download_data_guru', $data);
-        }
-    }
+		// berfungsi untuk mengecek / mengambil url ke 3
+		//  arti kondisi :  jika uri segment ketiga nya pdf maka akan menjalankan codingan di bawahnya
+		if ($this->uri->segment(3) == "pdf") {
+			$this->load->library('pdf');
+			$this->pdf->load_view('admin/export_data_guru', $data);
+			$this->pdf->render();
+			$this->pdf->stream("data_guru.pdf", array("Attachment" => false));
+		} else {
+			$this->load->view('admin/download_data_guru', $data);
+		}
+	}
 }
 ?>

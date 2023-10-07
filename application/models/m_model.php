@@ -18,16 +18,6 @@ class M_model extends CI_Model
         return $query->result();
     }
 
-    public function getDataGuru()
-    {
-        $this->db->select('guru.*,mapel.nama_mapel,kelas.tingkat_kelas, kelas.jurusan_kelas');
-        $this->db->from('guru');
-        $this->db->join('mapel', 'guru.id = mapel.id', 'left');
-        $this->db->join('kelas', 'guru.id = kelas.id', 'left');
-        // Query database untuk mengambil data
-        $query = $this->db->get();
-        return $query->result();
-    }
 
     public function getDataPembayaran()
     {
